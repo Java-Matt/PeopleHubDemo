@@ -1,0 +1,3 @@
+DELETE FROM person;
+
+ALTER TABLE person ALTER COLUMN id RESTART;

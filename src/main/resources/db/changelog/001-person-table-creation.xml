@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="001-person-table-creation" author="mgryn">
+        <createTable tableName="person">
+            <column name="id" type="integer" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="dtype" type="varchar(20)"/>
+            <column name="first_name" type="varchar(30)"/>
+            <column name="last_name" type="varchar(30)"/>
+            <column name="personal_number" type="varchar(12)"/>
+            <column name="height" type="double"/>
+            <column name="weight" type="double"/>
+            <column name="email" type="varchar(50)"/>
+            <column name="version" type="integer" defaultValueNumeric="0"/>
+            <column name="university" type="varchar(30)"/>
+            <column name="year_of_study" type="int"/>
+            <column name="field_of_study" type="varchar(30)"/>
+            <column name="scholarship" type="double"/>
+            <column name="employment_start_date" type="date"/>
+            <column name="position" type="varchar(30)"/>
+            <column name="salary" type="double" defaultValueNumeric="0"/>
+            <column name="pension" type="double"/>
+            <column name="years_of_work" type="int"/>
+        </createTable>
+
+        <addUniqueConstraint columnNames="personal_number" constraintName="unique_personal_number" tableName="person"/>
+
+    </changeSet>
+</databaseChangeLog>
