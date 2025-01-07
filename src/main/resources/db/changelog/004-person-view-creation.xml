@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="004-person-view-creation" author="mgryn">
+        <createView viewName="person_view" replaceIfExists="true">
+            SELECT p.id                                      AS id,
+                   p.dtype                                   AS dtype,
+                   p.first_name                              AS first_name,
+                   p.last_name                               AS last_name,
+                   p.personal_number                         AS personal_number,
+                   p.height                                  AS height,
+                   p.weight                                  AS weight,
+                   p.email                                   AS email,
+                   p.version                                 AS version,
+                   p.university                              AS university,
+                   p.year_of_study                           AS year_of_study,
+                   p.field_of_study                          AS field_of_study,
+                   p.scholarship                             AS scholarship,
+                   p.pension                                 AS pension,
+                   p.years_of_work                           AS years_of_work,
+                   COALESCE((SELECT e.salary
+                             FROM experience e
+                             WHERE e.person_id = p.id
+                               AND p.dtype = 'EMPLOYEE'
+                               AND CURRENT_DATE BETWEEN e.start_date AND e.end_date
+                            LIMIT 1), 0)                     AS salary,
+                   COALESCE((SELECT COUNT(e.id)
+                             FROM experience e
+                             WHERE e.person_id = p.id
+                               AND p.dtype = 'EMPLOYEE'), 0) AS number_of_professions
+            FROM person p
+        </createView>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,29 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:mydb;MODE=MySQL
+    username: username
+    password: password
+    driverClassName: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.H2Dialect
+        ddl-auto: create-drop
+    open-in-view: false
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/changelog-master.xml
+    drop-first: true
+
+import:
+  executor:
+    corePoolSize: 1
+    maxPoolSize: 1
+    queueCapacity: 10
+    threadNamePrefix: "ImportExecutor-"
+
+batch:
+  size: 100
